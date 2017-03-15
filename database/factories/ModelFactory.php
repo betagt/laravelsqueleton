@@ -1,6 +1,5 @@
 <?php
-
-$factory->define(\BetaGT\UserAclManager\Models\User::class, function (Faker\Generator $faker) {
+$factory->define(\App\Models\User::class, function (Faker\Generator $faker) {
     static $password;
 
     return [
@@ -14,14 +13,14 @@ $factory->define(\BetaGT\UserAclManager\Models\User::class, function (Faker\Gene
         'remember_token' => str_random(10),
     ];
 });
-$factory->define(\BetaGT\UserAclManager\Models\Role::class, function (Faker\Generator $faker) {
+$factory->define(\App\Models\Role::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->name,
         'slug' => strtolower($faker->name),
         'description' => $faker->word,
     ];
 });
-$factory->define(\BetaGT\UserAclManager\Models\Permission::class, function (Faker\Generator $faker) {
+$factory->define(\App\Models\Permission::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->name,
         'slug' => [          // pass an array of permissions.

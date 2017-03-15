@@ -6,9 +6,9 @@
  * Time: 16:00
  */
 
-namespace Portal\Rotas;
+namespace App\Rotas;
 
-use Portal\Interfaces\ICustomRoute;
+use App\Interfaces\ICustomRoute;
 use \Route;
 
 class PermissionRoute implements ICustomRoute

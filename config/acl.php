@@ -8,8 +8,8 @@ return [
      * to package's model. You can define your model here.
      */
 
-    'role'       => \BetaGT\UserAclManager\Models\Role::class,
-    'permission' => \BetaGT\UserAclManager\Models\Permission::class,
+    'role'       => \App\Models\Role::class,
+    'permission' => \App\Models\Permission::class,
 
     /**
      * Most Permissive Wins right

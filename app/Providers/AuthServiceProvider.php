@@ -26,8 +26,6 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-
-        \BetaGT\UserAclManager\UserAclManager::routes();
         Passport::routes(null, [
             'prefix' => 'api/v1','middleware' => ['cors']
         ]);

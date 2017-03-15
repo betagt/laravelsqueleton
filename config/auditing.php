@@ -22,7 +22,7 @@ return [
     |
     */
 
-    'model' => \BetaGT\UserAclManager\Models\User::class,
+    'model' => \App\Models\User::class,
 
     /*
     |--------------------------------------------------------------------------

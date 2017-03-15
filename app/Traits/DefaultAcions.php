@@ -121,15 +121,52 @@ trait DefaultAcions
         try{
             $this->defaultRepository->delete($id);
             return self::responseSuccess(self::HTTP_CODE_OK, self::MSG_REGISTRO_EXCLUIDO);
-        }
-        catch (ModelNotFoundException $e){
+        }catch (ModelNotFoundException $e){
             return self::responseError(self::HTTP_CODE_NOT_FOUND, trans('errors.registre_not_found', ['status_code'=>$e->getCode(),'line'=>$e->getLine()]));
-        }
-        catch (RepositoryException $e){
+        }catch (RepositoryException $e){
             return self::responseError(self::HTTP_CODE_NOT_FOUND, trans('errors.registre_not_found', ['status_code'=>$e->getCode(),'line'=>$e->getLine()]));
-        }
-        catch (\Exception $e){
+        }catch (\Exception $e){
             return self::responseError(self::HTTP_CODE_BAD_REQUEST, trans('errors.undefined', ['status_code'=>$e->getCode(),'line'=>$e->getLine()]));
         }
     }
+
+    /**
+     * Deletar
+     *
+     * Endpoint para deletar passando o ID
+     */
+    public function destroyAll(Request $request){
+        $data = $request->all();
+        \Validator::make($data, [
+            'ids'=>'array|required'
+        ])->validate();
+        try{
+            app($this->defaultRepository->model())->destroy($data['ids']);
+            return self::responseSuccess(self::HTTP_CODE_OK, self::MSG_REGISTRO_EXCLUIDO);
+        }catch (ModelNotFoundException $e){
+            return self::responseError(self::HTTP_CODE_NOT_FOUND, trans('errors.registre_not_found', ['status_code'=>$e->getCode(),'line'=>$e->getLine()]));
+        }catch (RepositoryException $e){
+            return self::responseError(self::HTTP_CODE_NOT_FOUND, trans('errors.registre_not_found', ['status_code'=>$e->getCode(),'line'=>$e->getLine()]));
+        }catch (\Exception $e){
+            return self::responseError(self::HTTP_CODE_BAD_REQUEST, trans('errors.undefined', ['status_code'=>$e->getCode(),'line'=>$e->getLine()]));
+        }
+    }
+
+    public function trasheds(Request $request){
+        $request->merge(['lixeira'=>true]);
+        try{
+            return $this->defaultRepository
+                ->pushCriteria(new $this->defaultCriteria($request))
+                ->pushCriteria(new OrderCriteria($request))
+                ->paginate(self::$_PAGINATION_COUNT);
+        }catch (ModelNotFoundException $e){
+            return self::responseError(self::HTTP_CODE_NOT_FOUND, trans('errors.registre_not_found', ['status_code'=>$e->getCode(),'line'=>$e->getLine()]));
+        }catch (RepositoryException $e){
+            return self::responseError(self::HTTP_CODE_NOT_FOUND, trans('errors.registre_not_found', ['status_code'=>$e->getCode(),'line'=>$e->getLine()]));
+        }catch (\Exception $e){
+            return self::responseError(self::HTTP_CODE_BAD_REQUEST, trans('errors.undefined', ['status_code'=>$e->getCode(),'line'=>$e->getLine()]));
+        }
+    }
+
+
 }

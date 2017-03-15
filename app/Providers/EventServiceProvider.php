@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Events\UsuarioCadastrado;
+use App\Listeners\EmailDeCadastro;
+use App\Listeners\RegraDeAcesso;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
@@ -13,8 +16,9 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'App\Events\SomeEvent' => [
-            'App\Listeners\EventListener',
+        UsuarioCadastrado::class => [
+            EmailDeCadastro::class,
+            RegraDeAcesso::class,
         ],
     ];
 

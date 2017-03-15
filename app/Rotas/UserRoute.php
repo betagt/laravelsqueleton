@@ -1,6 +1,6 @@
 <?php
-    namespace Portal\Rotas;
-    use Portal\Interfaces\ICustomRoute;
+    namespace App\Rotas;
+    use App\Interfaces\ICustomRoute;
     use \Route;
 /**
  * Created by PhpStorm.
@@ -21,7 +21,8 @@ class UserRoute implements ICustomRoute
                 'as' => 'user.alterar_senha',
                 'uses' => 'UserController@alterarSenha',
             ]);
-            Route::group(['middleware' => ['acl'],'is' => 'administrador', 'protect_alias'  => 'user'],function (){
+            //Route::group(['middleware' => ['acl'],'is' => 'administrador', 'protect_alias'  => 'user'],function (){
+            Route::group([],function (){
                 Route::post('user/password/reset', [
                     'as' => 'user.solicitar_nova_senha',
                     'uses' => 'UserController@solicitarNovaSenha'
@@ -30,16 +31,27 @@ class UserRoute implements ICustomRoute
                     'as' => 'user.criar_nova_senha',
                     'uses' => 'UserController@criarNovaSenha',
                 ]);
-                Route::resource('user', 'UserController',[
-                        'except' => ['create', 'edit']
-                    ]);
                 Route::post('user/alterar_imagem', [
                     'as' => 'user.alterar_imagem',
                     'uses' => 'UserController@changeImage',
                 ]);
+                Route::post('user/destroy-all', [
+                    'as' => 'user.destroy_all',
+                    'uses' => 'UserController@destroyAll',
+                ]);
+
+                Route::get('user/lixeira', [
+                    'as' => 'user.lixeira',
+                    'uses' => 'UserController@trasheds',
+                ]);
+
                 Route::post('user/alterar_imagem_admin/{id}', [
                     'as' => 'user.alterar_imagem',
                     'uses' => 'UserController@changeImageAdmin',
+                ]);
+
+                Route::resource('user', 'UserController',[
+                    'except' => ['create', 'edit']
                 ]);
             });
         });

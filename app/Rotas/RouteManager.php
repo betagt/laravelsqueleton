@@ -6,9 +6,9 @@
  * Time: 16:10
  */
 
-namespace Portal\Rotas;
+namespace App\Rotas;
 
-use Portal\Interfaces\ICustomRoute;
+use App\Interfaces\ICustomRoute;
 
 class RouteManager implements ICustomRoute
 {

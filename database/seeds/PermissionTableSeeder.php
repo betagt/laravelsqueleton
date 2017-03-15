@@ -45,7 +45,7 @@ class PermissionTableSeeder extends Seeder
         }
         Permission::create($data);
         $roleAdmin->assignPermission($data['name']);
-        $user = \BetaGT\UserAclManager\Models\User::find($userId);
+        $user = \App\Models\User::find($userId);
         if($role)
         $user->assignRole($role);
     }
@@ -90,7 +90,7 @@ class PermissionTableSeeder extends Seeder
     }
     private function createUserPermission($id)
     {
-        $user = \BetaGT\UserAclManager\Models\User::find($id);
+        $user = \App\Models\User::find($id);
 
         // create crud permissions
         // create.user, view.user, update.user, delete.user
@@ -110,7 +110,7 @@ class PermissionTableSeeder extends Seeder
     }
 
     private function removePermission($id){
-        $user = \BetaGT\UserAclManager\Models\User::find($id);
+        $user = \App\Models\User::find($id);
         // remove an alias
         $user->removePermission('user');
 
@@ -124,7 +124,7 @@ class PermissionTableSeeder extends Seeder
     }
 
     private function accessRole($rule='administrator',$userId){
-        $user = \BetaGT\UserAclManager\Models\User::find($userId);
+        $user = \App\Models\User::find($userId);
         // by object
         //$user->assignRole($roleAdmin);
         // or by id
@@ -134,7 +134,7 @@ class PermissionTableSeeder extends Seeder
     }
 
     private function removeRule($id){
-        $user = \BetaGT\UserAclManager\Models\User::find($id);
+        $user = \App\Models\User::find($id);
         $user->revokeAllRoles();
     }
     private function removePermissionMe($id){
