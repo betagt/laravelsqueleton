@@ -21,8 +21,8 @@ class UserRoute implements ICustomRoute
                 'as' => 'user.alterar_senha',
                 'uses' => 'UserController@alterarSenha',
             ]);
-            //Route::group(['middleware' => ['acl'],'is' => 'administrador', 'protect_alias'  => 'user'],function (){
-            Route::group([],function (){
+            
+            Route::group(['middleware' => ['acl'],'is' => 'administrador', 'protect_alias'  => 'user'],function (){
                 Route::post('user/password/reset', [
                     'as' => 'user.solicitar_nova_senha',
                     'uses' => 'UserController@solicitarNovaSenha'
@@ -35,16 +35,6 @@ class UserRoute implements ICustomRoute
                     'as' => 'user.alterar_imagem',
                     'uses' => 'UserController@changeImage',
                 ]);
-                Route::post('user/destroy-all', [
-                    'as' => 'user.destroy_all',
-                    'uses' => 'UserController@destroyAll',
-                ]);
-
-                Route::get('user/lixeira', [
-                    'as' => 'user.lixeira',
-                    'uses' => 'UserController@trasheds',
-                ]);
-
                 Route::post('user/alterar_imagem_admin/{id}', [
                     'as' => 'user.alterar_imagem',
                     'uses' => 'UserController@changeImageAdmin',
@@ -54,36 +44,6 @@ class UserRoute implements ICustomRoute
                     'except' => ['create', 'edit']
                 ]);
             });
-        });
-        Route::group(['prefix'=>'front','middleware' => ['auth:api','acl'],'is' => 'anunciante|administrador,or','namespace'=>'Api\Front'],function (){
-            Route::get('user/perfil/', [
-                'as' => 'user.meu_perfil',
-                'uses' => 'UserController@myProfile'
-            ]);
-            Route::post('user/alterar_imagem', [
-                'as' => 'user.alterar_imagem',
-                'uses' => 'UserController@changeImage',
-            ]);
-
-            Route::patch('user/password/change', [
-                'as' => 'user.alterar_senha',
-                'uses' => 'UserController@alterarSenha',
-            ]);
-
-            Route::post('user/registrar', [
-                'as' => 'user.registrar',
-                'uses' => 'UserController@cadastrar',
-            ]);
-
-            Route::post('user/password/reset', [
-                'as' => 'user.solicitar_nova_senha',
-                'uses' => 'UserController@solicitarNovaSenha'
-            ]);
-            Route::post('user/password/reset/change', [
-                'as' => 'user.criar_nova_senha',
-                'uses' => 'UserController@criarNovaSenha',
-            ]);
-
         });
     }
 }

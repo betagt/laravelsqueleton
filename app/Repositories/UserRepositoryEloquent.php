@@ -1,15 +1,16 @@
 <?php
 
-namespace Portal\Repositories;
+namespace App\Repositories;
 
 use Illuminate\Container\Container as Application;
-use Portal\Models\User;
-use Portal\Presenters\UserPresenter;
+use App\Models\User;
+use App\Presenters\UserPresenter;
 use Prettus\Repository\Criteria\RequestCriteria;
+use Prettus\Repository\Eloquent\BaseRepository;
 
 /**
  * Class UserRepositoryEloquent
- * @package namespace Portal\Repositories;
+ * @package namespace App\Repositories;
  */
 class UserRepositoryEloquent extends BaseRepository implements UserRepository
 {

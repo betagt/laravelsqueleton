@@ -33,3 +33,13 @@ $factory->define(\App\Models\Permission::class, function (Faker\Generator $faker
         'description' => $faker->word,
     ];
 });
+
+$factory->define(\Portal\Models\RotaAcesso::class, function (Faker\Generator $faker){
+    return [
+        'parent_id' => null,
+        'text' => $faker->word,
+        'rota' => '',
+        'icon' => '',
+        'disabled' => false,
+    ];
+});

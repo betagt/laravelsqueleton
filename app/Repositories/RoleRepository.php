@@ -1,12 +1,12 @@
 <?php
 
-namespace Portal\Repositories;
+namespace App\Repositories;
 
 use Prettus\Repository\Contracts\RepositoryInterface;
 
 /**
  * Interface RoleRepository
- * @package namespace Portal\Repositories;
+ * @package namespace App\Repositories;
  */
 interface RoleRepository extends RepositoryInterface
 {

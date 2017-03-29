@@ -21,13 +21,6 @@ class UserCriteria extends BaseCriteria implements CriteriaInterface
     public function apply($model, RepositoryInterface $repository)
     {
         $model = parent::apply($model, $repository);
-        if($this->request->get('lixeira')) {
-            return $model
-                ->onlyTrashed()
-                ->join('role_user', 'users.id', 'role_user.user_id')
-                ->join('roles', 'roles.id', 'role_user.role_id')
-                ->select(array_merge($this->defaultTable));
-        }
         return $model
             ->join('role_user','users.id','role_user.user_id')
             ->join('roles','roles.id','role_user.role_id')

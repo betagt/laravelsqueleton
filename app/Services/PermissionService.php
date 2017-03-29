@@ -6,15 +6,15 @@
  * Time: 13:50
  */
 
-namespace Portal\Services;
+namespace App\Services;
 
 
-use Portal\Models\Permission;
-use Portal\Models\Role;
-use Portal\Models\User;
-use Portal\Repositories\PermissionRepository;
-use Portal\Repositories\RoleRepository;
-use Portal\Repositories\UserRepository;
+use App\Models\Permission;
+use App\Models\Role;
+use App\Models\User;
+use App\Repositories\PermissionRepository;
+use App\Repositories\RoleRepository;
+use App\Repositories\UserRepository;
 
 class PermissionService
 {

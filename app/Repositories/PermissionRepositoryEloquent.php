@@ -1,15 +1,15 @@
 <?php
 
-namespace Portal\Repositories;
+namespace App\Repositories;
 
-use Portal\Models\Permission;
-use Portal\Presenters\PermissionPresenter;
+use App\Models\Permission;
+use App\Presenters\PermissionPresenter;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Prettus\Repository\Eloquent\BaseRepository;
 
 /**
  * Class PermissionRepositoryEloquent
- * @package namespace Portal\Repositories;
+ * @package namespace App\Repositories;
  */
 class PermissionRepositoryEloquent extends BaseRepository implements PermissionRepository
 {

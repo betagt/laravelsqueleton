@@ -13,12 +13,13 @@ use App\Repositories\PermissionRepository;
 use App\Repositories\RoleRepository;
 use App\Repositories\UserRepository;
 use App\Services\RoleService;
+use Prettus\Repository\Exceptions\RepositoryException;
 use Validator;
 
 /**
  * @resource API Regras de Acesso - Backend
  *
- * Essa API é responsável pelo gerenciamento de regras de Usuários na API qImob.
+ * Essa API é responsável pelo gerenciamento de regras de Usuários no App qImob.
  * Os próximos tópicos apresenta os endpoints de Consulta, Cadastro, Edição e Deleção.
  */
 class RoleController extends BaseController
@@ -78,7 +79,6 @@ class RoleController extends BaseController
             return parent::responseError(parent::HTTP_CODE_BAD_REQUEST, trans('errors.undefined', ['status_code'=>$e->getCode(),'line'=>$e->getLine()]));
         }
     }
-
 
     /**
      *  Remover Regra
@@ -201,6 +201,18 @@ class RoleController extends BaseController
         Validator::make($data, $rules)->validate();
         try{
             return $this->userRepository->syncRoles($data['user_id'],$data['rules']);
+        }
+        catch (ModelNotFoundException $e){
+            return parent::responseError(parent::HTTP_CODE_NOT_FOUND, trans('errors.registre_not_found', ['status_code'=>$e->getCode(),'line'=>$e->getLine()]));
+        }
+        catch (\Exception $e){
+            return parent::responseError(parent::HTTP_CODE_BAD_REQUEST, trans('errors.undefined', ['status_code'=>$e->getCode(),'line'=>$e->getLine()]));
+        }
+    }
+
+    public function listaSelect(){
+        try{
+            return $this->roleRepository->skipPresenter(true)->all(['name','id']);
         }
         catch (ModelNotFoundException $e){
             return parent::responseError(parent::HTTP_CODE_NOT_FOUND, trans('errors.registre_not_found', ['status_code'=>$e->getCode(),'line'=>$e->getLine()]));

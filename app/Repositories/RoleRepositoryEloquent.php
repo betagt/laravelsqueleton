@@ -1,15 +1,15 @@
 <?php
 
-namespace Portal\Repositories;
+namespace App\Repositories;
 
-use Portal\Models\Role;
-use Portal\Presenters\RolePresenter;
+use App\Models\Role;
+use App\Presenters\RolePresenter;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Prettus\Repository\Eloquent\BaseRepository;
 
 /**
  * Class RoleRepositoryEloquent
- * @package namespace Portal\Repositories;
+ * @package namespace App\Repositories;
  */
 class RoleRepositoryEloquent extends BaseRepository implements RoleRepository
 {

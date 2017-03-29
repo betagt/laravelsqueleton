@@ -20,7 +20,7 @@ use Validator;
 /**
  * @resource API Permissão de Usuários - Backend
  *
- * Essa API é responsável pelo gerenciamento de Permissão de Usuários na API qImob.
+ * Essa API é responsável pelo gerenciamento de Permissão de Usuários no App qImob.
  * Os próximos tópicos apresenta os endpoints de Consulta, Cadastro, Edição e Deleção.
  */
 class PermissionController extends BaseController
@@ -124,6 +124,16 @@ class PermissionController extends BaseController
         catch (\Exception $e){
             return parent::responseError(parent::HTTP_CODE_BAD_REQUEST, trans('errors.undefined', ['status_code'=>$e->getCode(),'line'=>$e->getLine()]));
         }
+    }
+
+    /**
+     * Listar todas permissões do grupo.
+     *
+     * @param $id
+     * @return mixed
+     */
+    public function ativas(Request $request){
+       return $this->permissionByRole($request->user()->role->id);
     }
 
     /**

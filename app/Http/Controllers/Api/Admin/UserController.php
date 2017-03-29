@@ -22,7 +22,7 @@ use Validator;
 /**
  * @resource API Usuário - Backend
  *
- * Essa API é responsável pelo gerenciamento de Usuários no portal qImob.
+ * Essa API é responsável pelo gerenciamento de Usuários no App qImob.
  * Os próximos tópicos apresenta os endpoints de Consulta, Cadastro, Edição e Deleção.
  */
 class UserController extends BaseController

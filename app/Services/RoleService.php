@@ -4,9 +4,8 @@
 namespace App\Services;
 
 
-use BetaGT\UserAclManager\Models\User;
-use BetaGT\UserAclManager\Models\Role;
-use BetaGT\UserAclManager\RoleRepository;
+use App\Models\Role;
+use App\Repositories\RoleRepository;
 
 class RoleService
 {
@@ -18,7 +17,7 @@ class RoleService
     }
 
     public function createAssoc($data){
-        $user = User::find($data['user_id']);
+        $user = \App\Models\User::find($data['user_id']);
         return $user->assignRole(Role::find($data['role_id']));
     }
 }

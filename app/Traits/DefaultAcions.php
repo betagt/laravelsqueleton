@@ -24,11 +24,10 @@ trait DefaultAcions
      *   <br> - ?consulta={"filtro": {"estados.uf": "TO", "cidades.titulo" : "Palmas"}}
      */
     public function index(Request $request){
-
         try{
             return $this->defaultRepository
                 ->pushCriteria(new $this->defaultCriteria($request))
-                ->pushCriteria(new OrderCriteria($request))
+                ->pushCriteria(new $this->defaultOrder($request))
                 ->paginate(self::$_PAGINATION_COUNT);
         }catch (ModelNotFoundException $e){
             return self::responseError(self::HTTP_CODE_NOT_FOUND, trans('errors.registre_not_found', ['status_code'=>$e->getCode(),'line'=>$e->getLine()]));
@@ -135,11 +134,12 @@ trait DefaultAcions
      *
      * Endpoint para deletar passando o ID
      */
-    public function destroyAll(Request $request){
+    public function excluir(Request $request){
         $data = $request->all();
         \Validator::make($data, [
             'ids'=>'array|required'
         ])->validate();
+
         try{
             app($this->defaultRepository->model())->destroy($data['ids']);
             return self::responseSuccess(self::HTTP_CODE_OK, self::MSG_REGISTRO_EXCLUIDO);
@@ -157,7 +157,7 @@ trait DefaultAcions
         try{
             return $this->defaultRepository
                 ->pushCriteria(new $this->defaultCriteria($request))
-                ->pushCriteria(new OrderCriteria($request))
+                ->pushCriteria(new $this->defaultOrder($request))
                 ->paginate(self::$_PAGINATION_COUNT);
         }catch (ModelNotFoundException $e){
             return self::responseError(self::HTTP_CODE_NOT_FOUND, trans('errors.registre_not_found', ['status_code'=>$e->getCode(),'line'=>$e->getLine()]));

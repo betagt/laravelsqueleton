@@ -6,7 +6,7 @@
  * Time: 15:58
  */
 
-namespace App\Rotas;
+namespace Portal\Rotas;
 
 use App\Interfaces\ICustomRoute;
 use \Route;
@@ -21,6 +21,10 @@ class RoleRoute implements ICustomRoute
                 Route::get('regra/revogar_todas_regras_usuario/{id}', [
                     'as' => 'regra.revogar_todas_regras_usuario',
                     'uses' => 'RoleController@revokeAllRoles'
+                ]);
+                Route::get('regra/lista-roles', [
+                    'as' => 'regra.lista_roles',
+                    'uses' => 'RoleController@listaSelect'
                 ]);
                 Route::post('regra/sincronizar_regra_permissoes', [
                     'as' => 'regra.sincronizar_regra_permissoes',

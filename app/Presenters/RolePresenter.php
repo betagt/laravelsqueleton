@@ -8,7 +8,7 @@ use Prettus\Repository\Presenter\FractalPresenter;
 /**
  * Class RolePresenter
  *
- * @package namespace Portal\Presenters;
+ * @package namespace App\Presenters;
  */
 class RolePresenter extends FractalPresenter
 {

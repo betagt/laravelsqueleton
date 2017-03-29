@@ -1,17 +1,17 @@
 <?php
 
-namespace Portal\Transformers;
+namespace App\Transformers;
 
 use League\Fractal\TransformerAbstract;
-use Portal\Models\Role;
+use App\Models\Role;
 
 /**
  * Class RoleTransformer
- * @package namespace Portal\Transformers;
+ * @package namespace App\Transformers;
  */
 class RoleTransformer extends TransformerAbstract
 {
-    public $availableIncludes = ['permissions'];
+    public $availableIncludes = ['permissions', 'rota_acesso'];
 
     /**
      * Transform the \Role entity
@@ -39,4 +39,14 @@ class RoleTransformer extends TransformerAbstract
         }
         return $this->collection($model->permissions, new PermissionTransformer());
     }
+
+    public function includeRotaAcesso(Role $model)
+    {
+        if (!$model->rotaAcessos)
+        {
+            return null;
+        }
+        return $this->collection($model->rotaAcessos, new RotaAcessoTransformer());
+    }
+
 }

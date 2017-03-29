@@ -2,12 +2,12 @@
 
 namespace Portal\Transformers;
 
-use Portal\Models\Telefone;
-use Portal\Models\User;
+use App\Models\Telefone;
+use App\Models\User;
 
 /**
  * Class UserTransformer
- * @package namespace Portal\Transformers;
+ * @package namespace App\Transformers;
  */
 class UserTransformer extends BaseTransformer
 {

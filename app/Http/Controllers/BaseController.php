@@ -19,7 +19,7 @@ abstract class BaseController extends Controller implements ICustomController
 {
     use DefaultAcions;
 
-    protected static $_PAGINATION_COUNT = 1;
+    protected static $_PAGINATION_COUNT = 25;
 
     protected $defaultRepository;
     /**
@@ -28,11 +28,16 @@ abstract class BaseController extends Controller implements ICustomController
     private $defaultCriteria;
 
     protected $validator = [];
+    /**
+     * @var string
+     */
+    private $defaultOrder;
 
-    public function __construct($defaultRepository, $defaultCriteria)
+    public function __construct($defaultRepository, $defaultCriteria, $defaultOrder = OrderCriteria::class)
     {
         $this->defaultRepository = $defaultRepository;
         $this->defaultCriteria = $defaultCriteria;
+        $this->defaultOrder = $defaultOrder;
     }
 
     const MSG_REGISTRO_EXCLUIDO = 'Registro excluido com sucesso.';

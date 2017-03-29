@@ -6,7 +6,7 @@
  * Time: 16:00
  */
 
-namespace App\Rotas;
+namespace Portal\Rotas;
 
 use App\Interfaces\ICustomRoute;
 use \Route;
@@ -17,6 +17,10 @@ class PermissionRoute implements ICustomRoute
     public static function run()
     {
         Route::group(['prefix'=>'admin','middleware' => ['auth:api'],'namespace'=>'Api\Admin'],function (){
+            Route::get('permissao/ativas', [
+                'as' => 'permissao.ativas',
+                'uses' => 'PermissionController@ativas'
+            ]);
             Route::group(['middleware' => ['acl'],'is' => 'administrador', 'protect_alias'  => 'user'],function (){
                 Route::get('permissao/revogar_permissoes/{id}', [
                     'as' => 'permissao.revogar_permissoes',

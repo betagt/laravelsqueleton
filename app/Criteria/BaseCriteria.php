@@ -32,7 +32,7 @@ use Prettus\Repository\Contracts\RepositoryInterface;
  *    http://localhost:8000/api/v1/front/plano/consulta?consulta={"filtro":{"plano.tipo":"anunciante;imobiliaria;qimob-erp"}}
  *
  * Class BaseCriteria
- * @package Portal\Criteria
+ * @package App\Criteria
  */
 abstract class BaseCriteria implements CriteriaInterface
 {
@@ -116,6 +116,9 @@ abstract class BaseCriteria implements CriteriaInterface
     public function apply($model, RepositoryInterface $repository)
     {
         $this->defaultTable = array_merge($this->defaultTable,[$model->getTable().'.*']);
+        if($this->request->get('lixeira')) {
+            $model = $model->onlyTrashed();
+        }
         if($this->defaultValidate($this->whereArray)){
             return $model;
         }
@@ -196,6 +199,9 @@ abstract class BaseCriteria implements CriteriaInterface
             case 'like':
                 $query->where($row,'like',"%".$value."%");
                 break;
+            case 'ilike':
+                $query->where($row,'ilike',"%".$value."%");
+                break;
             case 'between':
                 $data = explode(';',$value);
                 if(count($data)==2){
@@ -208,6 +214,7 @@ abstract class BaseCriteria implements CriteriaInterface
                     $aux = last($data);
                     if(empty($aux))
                         array_pop($data);
+
                     $query->orWhere(function($query) use ($row,$data){
                         $query->whereIn($row, $data);
                         if(empty($aux)){

@@ -1,13 +1,13 @@
 <?php
 
-namespace Portal\Transformers;
+namespace App\Transformers;
 
 use League\Fractal\TransformerAbstract;
-use Portal\Models\Permission;
+use App\Models\Permission;
 
 /**
  * Class PermissionTransformer
- * @package namespace Portal\Transformers;
+ * @package namespace App\Transformers;
  */
 class PermissionTransformer extends TransformerAbstract
 {
