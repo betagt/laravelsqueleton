@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
+use App\Traits\HasRole;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Kodeine\Acl\Traits\HasRole;
 use Laravel\Passport\HasApiTokens;
 use OwenIt\Auditing\Auditable;
 use Prettus\Repository\Contracts\Transformable;
