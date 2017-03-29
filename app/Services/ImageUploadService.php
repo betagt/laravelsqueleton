@@ -6,7 +6,7 @@
  * Time: 10:52
  */
 
-namespace Portal\Services;
+namespace App\Services;
 
 
 

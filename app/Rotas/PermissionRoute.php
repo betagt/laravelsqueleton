@@ -6,7 +6,7 @@
  * Time: 16:00
  */
 
-namespace Portal\Rotas;
+namespace App\Rotas;
 
 use App\Interfaces\ICustomRoute;
 use \Route;

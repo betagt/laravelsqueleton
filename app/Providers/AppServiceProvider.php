@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
+use App\Rotas\Registros\ResourceRegistrar;
 use Illuminate\Support\ServiceProvider;
-use Prettus\Repository\Providers\RepositoryServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {

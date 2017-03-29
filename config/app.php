@@ -177,8 +177,7 @@ return [
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
-        \BetaGT\UserAclManager\UserAclManagerServiceProvider::class,
+        \Laravel\Passport\PassportServiceProvider::class,
         \Barryvdh\Cors\ServiceProvider::class,
 
     ],

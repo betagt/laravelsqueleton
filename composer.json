@@ -7,13 +7,18 @@
     "require": {
         "php": ">=5.6.4",
         "laravel/framework": "5.3.*",
-        "barryvdh/laravel-cors": "0.8.5",
         "prettus/l5-repository": "^2.6",
         "league/fractal": "^0.14.0",
-        "kodeine/laravel-acl": "^0.1.3",
+        "kodeine/laravel-acl": "~1.0@dev",
         "doctrine/dbal": "^2.5",
-        "laravel/passport": "^1.0",
-        "owen-it/laravel-auditing": "3.1.10"
+        "mpociot/laravel-apidoc-generator": "^1.7",
+        "owen-it/laravel-auditing": "^3.1",
+        "barryvdh/laravel-ide-helper": "^2.2",
+        "barryvdh/laravel-cors": "^0.8.5",
+        "betagt/cep-location-viacep": "0.0.3",
+        "michael/laravelpagseguro": "1.0",
+        "pagseguro/php": "2.7.1",
+        "laravel/passport": "1.0.17"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
