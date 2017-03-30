@@ -2,7 +2,6 @@
 
 namespace Portal\Transformers;
 
-use App\Models\Telefone;
 use App\Models\User;
 use App\Transformers\BaseTransformer;
 use App\Transformers\PermissionTransformer;
