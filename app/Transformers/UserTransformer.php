@@ -13,7 +13,7 @@ use App\Transformers\RoleTransformer;
  */
 class UserTransformer extends BaseTransformer
 {
-    public $availableIncludes = ['permissions', 'roles', 'endereco','telefones'];
+    public $availableIncludes = ['permissions', 'roles'];
     /**
      * Transform the \User entity
      * @param \User $model
