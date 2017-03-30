@@ -19,5 +19,7 @@ Route::group(['prefix'=>'v1','middleware' => ['cors']], function () {
     \App\Rotas\RoleRoute::run();
     \App\Rotas\PermissionRoute::run();
     \App\Rotas\ClienteRoute::run();
+    \App\Rotas\RotaAcessoRoute::run();
+    \App\Rotas\ConfiguracaoRoute::run();
 });
 

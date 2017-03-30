@@ -34,12 +34,38 @@ $factory->define(\App\Models\Permission::class, function (Faker\Generator $faker
     ];
 });
 
-$factory->define(\Portal\Models\RotaAcesso::class, function (Faker\Generator $faker){
+$factory->define(\App\Models\RotaAcesso::class, function (Faker\Generator $faker){
     return [
         'parent_id' => null,
         'text' => $faker->word,
         'rota' => '',
         'icon' => '',
         'disabled' => false,
+    ];
+});
+
+$factory->define(\App\Models\Configuracao::class, function (Faker\Generator $faker) {
+    return [
+        'titulo' => $faker->name,
+        'email' => $faker->email,
+        'url_site' => $faker->url,
+        'telefone' => $faker->phoneNumber,
+        'horario_atendimento' => $faker->date('H:i'),
+        'endereco' => $faker->address,
+        'rodape' => $faker->word,
+        'facebook' => null,
+        'twitter' => null,
+        'google_plus' => null,
+        'youtube' => null,
+        'instagram' => null,
+        'palavra_chave' => null,
+        'descricao_site' => null,
+        'og_tipo_app' => null,
+        'og_titulo_site' => null,
+        'od_url_site' => null,
+        'od_autor_site' => null,
+        'facebook_id' => null,
+        'token' => null,
+        'analytcs_code' => null,
     ];
 });

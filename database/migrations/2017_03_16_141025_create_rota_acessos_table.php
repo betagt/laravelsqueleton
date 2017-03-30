@@ -13,7 +13,7 @@ class CreateRotaAcessosTable extends Migration
 	 */
 	public function up()
 	{
-		Schema::create('rota_acessos', function(Blueprint $table) {
+        Schema::create('rota_acessos', function(Blueprint $table) {
             $table->increments('id');
             $table->integer('parent_id')->nullable();
             $table->string('text');
@@ -21,9 +21,10 @@ class CreateRotaAcessosTable extends Migration
             $table->string('icon')->nullable();
             $table->string('prioridade')->nullable()->default(99);
             $table->boolean('disabled')->default(false);
+            $table->boolean('is_menu')->default(false);
             $table->softDeletes();
             $table->timestamps();
-		});
+        });
 	}
 
 	/**

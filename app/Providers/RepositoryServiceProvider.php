@@ -9,10 +9,14 @@
 namespace App\Providers;
 
 
+use App\Repositories\ConfiguracaoRepository;
+use App\Repositories\ConfiguracaoRepositoryEloquent;
 use App\Repositories\PermissionRepository;
 use App\Repositories\PermissionRepositoryEloquent;
 use App\Repositories\RoleRepository;
 use App\Repositories\RoleRepositoryEloquent;
+use App\Repositories\RotaAcessoRepository;
+use App\Repositories\RotaAcessoRepositoryEloquent;
 use App\Repositories\UserRepository;
 use App\Repositories\UserRepositoryEloquent;
 use App\Repositories\ClientRepository;
@@ -44,6 +48,15 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             ClientRepository::class,
             ClientRepositoryEloquent::class
+        );
+
+        $this->app->bind(
+            RotaAcessoRepository::class,
+            RotaAcessoRepositoryEloquent::class
+        );
+        $this->app->bind(
+            ConfiguracaoRepository::class,
+            ConfiguracaoRepositoryEloquent::class
         );
 
     }
