@@ -4,6 +4,9 @@ namespace Portal\Transformers;
 
 use App\Models\Telefone;
 use App\Models\User;
+use App\Transformers\BaseTransformer;
+use App\Transformers\PermissionTransformer;
+use App\Transformers\RoleTransformer;
 
 /**
  * Class UserTransformer
@@ -52,21 +55,5 @@ class UserTransformer extends BaseTransformer
             return null;
         }
         return $this->collection($model->return_roles, new RoleTransformer());
-    }
-
-    public function includeTelefones(User $model){
-        if (!$model->telefones)
-        {
-            return null;
-        }
-        return $this->collection($model->telefones, new TelefoneTransformer());
-    }
-
-    public function includeEndereco(User $model){
-        if (!$model->endereco)
-        {
-            return null;
-        }
-        return $this->item($model->endereco, new EnderecoTransformer());
     }
 }
