@@ -16,6 +16,7 @@ use App\Http\Requests\UserResetSendEmailRequest;
 use App\Models\User;
 use App\Repositories\UserRepository;
 use App\Services\ImageUploadService;
+use Lcobucci\JWT\Parser;
 use Prettus\Repository\Exceptions\RepositoryException;
 use Validator;
 
@@ -72,22 +73,46 @@ class UserController extends BaseController
      * @param Request $request
      * @return retorna um registro criado
      */
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $data = $request->all();
         \Validator::make($data, $this->getValidator())->validate();
-        try{
+        try {
             $data['status'] = User::INATIVO;
             $data = $this->defaultRepository->skipPresenter(true)->create($data);
             $data->assignRole('anunciante');
             return $this->defaultRepository->skipPresenter(false)->find($data->id);
-        }catch (ModelNotFoundException $e){
-            return self::responseError(self::HTTP_CODE_NOT_FOUND, trans('errors.registre_not_found', ['status_code'=>$e->getCode(),'line'=>$e->getLine()]));
+        } catch (ModelNotFoundException $e) {
+            return self::responseError(self::HTTP_CODE_NOT_FOUND, trans('errors.registre_not_found', ['status_code' => $e->getCode(), 'line' => $e->getLine()]));
+        } catch (RepositoryException $e) {
+            return self::responseError(self::HTTP_CODE_NOT_FOUND, trans('errors.registre_not_found', ['status_code' => $e->getCode(), 'line' => $e->getLine()]));
+        } catch (\Exception $e) {
+            return self::responseError(self::HTTP_CODE_BAD_REQUEST, trans('errors.undefined', ['status_code' => $e->getCode(), 'line' => $e->getLine()]));
         }
-        catch (RepositoryException $e){
-            return self::responseError(self::HTTP_CODE_NOT_FOUND, trans('errors.registre_not_found', ['status_code'=>$e->getCode(),'line'=>$e->getLine()]));
-        }
-        catch (\Exception $e){
-            return self::responseError(self::HTTP_CODE_BAD_REQUEST, trans('errors.undefined', ['status_code'=>$e->getCode(),'line'=>$e->getLine()]));
+    }
+
+    /**
+     * Alterar
+     *
+     * Endpoint para alterar
+     *
+     * @param Request $request
+     * @param $id
+     * @return retorna registro alterado
+     */
+    public function updateCurrentUser(Request $request)
+    {
+        $id = $request->user()->id;
+        $data = $request->all();
+        \Validator::make($data, $this->getValidator($id))->validate();
+        try {
+            return $this->defaultRepository->update($request->all(), $id);
+        } catch (ModelNotFoundException $e) {
+            return self::responseError(self::HTTP_CODE_NOT_FOUND, trans('errors.registre_not_found', ['status_code' => $e->getCode(), 'line' => $e->getLine()]));
+        } catch (RepositoryException $e) {
+            return self::responseError(self::HTTP_CODE_NOT_FOUND, trans('errors.registre_not_found', ['status_code' => $e->getCode(), 'line' => $e->getLine()]));
+        } catch (\Exception $e) {
+            return self::responseError(self::HTTP_CODE_BAD_REQUEST, trans('errors.undefined', ['status_code' => $e->getCode(), 'line' => $e->getLine()]));
         }
     }
 
@@ -97,7 +122,8 @@ class UserController extends BaseController
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse|mixed
      */
-    public function changeImage(Request $request){
+    public function changeImage(Request $request)
+    {
         $data = $request->all();
         Validator::make($data, [
             'imagem' => [
@@ -106,14 +132,12 @@ class UserController extends BaseController
                 'mimes:jpg,jpeg,bmp,png'
             ]
         ])->validate();
-        try{
-            $this->imageUploadService->upload('imagem',$this->getPathFile(),$data);
-            return $this->userRepository->update($data,$request->user()->id);
-        }
-        catch (ModelNotFoundException $e){
+        try {
+            $this->imageUploadService->upload('imagem', $this->getPathFile(), $data);
+            return $this->userRepository->update($data, $request->user()->id);
+        } catch (ModelNotFoundException $e) {
             return parent::responseError(parent::HTTP_CODE_NOT_FOUND, $e->getMessage());
-        }
-        catch (\Exception $e){
+        } catch (\Exception $e) {
             return parent::responseError(parent::HTTP_CODE_BAD_REQUEST, $e->getMessage());
         }
     }
@@ -125,7 +149,8 @@ class UserController extends BaseController
      * @param $id
      * @return \Illuminate\Http\JsonResponse|mixed
      */
-    public function changeImageAdmin(Request $request,$id){
+    public function changeImageAdmin(Request $request, $id)
+    {
         $data = $request->all();
         Validator::make($data, [
             'imagem' => [
@@ -134,17 +159,16 @@ class UserController extends BaseController
                 'mimes:jpg,jpeg,bmp,png'
             ]
         ])->validate();
-        try{
-            $this->imageUploadService->upload('imagem',$this->getPathFile(),$data);
-            return $this->userRepository->update($data,$id);
-        }
-        catch (ModelNotFoundException $e){
+        try {
+            $this->imageUploadService->upload('imagem', $this->getPathFile(), $data);
+            return $this->userRepository->update($data, $id);
+        } catch (ModelNotFoundException $e) {
             return parent::responseError(parent::HTTP_CODE_NOT_FOUND, $e->getMessage());
-        }
-        catch (\Exception $e){
+        } catch (\Exception $e) {
             return parent::responseError(parent::HTTP_CODE_BAD_REQUEST, $e->getMessage());
         }
     }
+
     /**
      * Consultar Perfil Usuário
      *
@@ -153,20 +177,20 @@ class UserController extends BaseController
      * @param $id
      * @return mixed
      */
-    public function myProfile(Request $request){
-        $id  = $request->user()->id;
-        try{
+    public function myProfile(Request $request)
+    {
+        $id = $request->user()->id;
+        try {
             return $this->userRepository->find($id);
-        }catch (ModelNotFoundException $e){
-            return parent::responseError(parent::HTTP_CODE_NOT_FOUND, trans('errors.registre_not_found', ['status_code'=>$e->getCode(),'line'=>$e->getLine()]));
-        }
-        catch (RepositoryException $e){
-            return parent::responseError(parent::HTTP_CODE_NOT_FOUND, trans('errors.registre_not_found', ['status_code'=>$e->getCode(),'line'=>$e->getLine()]));
-        }
-        catch (\Exception $e){
-            return parent::responseError(parent::HTTP_CODE_BAD_REQUEST, trans('errors.undefined', ['status_code'=>$e->getCode(),'line'=>$e->getLine()]));
+        } catch (ModelNotFoundException $e) {
+            return parent::responseError(parent::HTTP_CODE_NOT_FOUND, trans('errors.registre_not_found', ['status_code' => $e->getCode(), 'line' => $e->getLine()]));
+        } catch (RepositoryException $e) {
+            return parent::responseError(parent::HTTP_CODE_NOT_FOUND, trans('errors.registre_not_found', ['status_code' => $e->getCode(), 'line' => $e->getLine()]));
+        } catch (\Exception $e) {
+            return parent::responseError(parent::HTTP_CODE_BAD_REQUEST, trans('errors.undefined', ['status_code' => $e->getCode(), 'line' => $e->getLine()]));
         }
     }
+
     /**
      * Solicitar Nova Senha
      *
@@ -177,13 +201,11 @@ class UserController extends BaseController
      */
     public function solicitarNovaSenha(UserResetSendEmailRequest $request)
     {
-        $response = $this->passwordBroker->sendResetLink($request->only('email'), function($m)
-        {
+        $response = $this->passwordBroker->sendResetLink($request->only('email'), function ($m) {
             $m->subject($this->getEmailSubject());
         });
 
-        switch ($response)
-        {
+        switch ($response) {
             case PasswordBroker::RESET_LINK_SENT:
                 return parent::responseSuccess(parent::HTTP_CODE_OK, "O link de recuperação de senha foi enviado para seu endereço de e-mail");
             case PasswordBroker::INVALID_USER:
@@ -205,16 +227,14 @@ class UserController extends BaseController
             'email', 'password', 'password_confirmation', 'token'
         );
 
-        $response = $this->passwordBroker->reset($credentials, function($user, $password)
-        {
+        $response = $this->passwordBroker->reset($credentials, function ($user, $password) {
             $user->forceFill([
                 'password' => $password,
                 'remember_token' => Str::random(60),
             ])->save();
         });
 
-        switch ($response)
-        {
+        switch ($response) {
             case PasswordBroker::PASSWORD_RESET:
                 return parent::responseSuccess(parent::HTTP_CODE_OK, "Senha alterada com sucesso.");
             case PasswordBroker::INVALID_TOKEN:
@@ -237,7 +257,7 @@ class UserController extends BaseController
     public function alterarSenha(UserChangePasswordRequest $request)
     {
         $user = $request->user();
-        if(password_verify($request->get('old_password'), $user->password)) {
+        if (password_verify($request->get('old_password'), $user->password)) {
             $this->userRepository->update(['password' => $request->get('new_password')], $user->id);
             return parent::responseSuccess(parent::HTTP_CODE_OK, "Senha alterada com sucesso.");
         }
@@ -247,19 +267,33 @@ class UserController extends BaseController
     /**
      * Deletar Usuário
      */
-    public function destroy($id){
-         try{
-             $this->userRepository->delete($id);
-             return parent::responseSuccess(parent::HTTP_CODE_OK, parent::MSG_REGISTRO_EXCLUIDO);
-         }
-         catch (ModelNotFoundException $e){
-             return parent::responseError(parent::HTTP_CODE_NOT_FOUND, $e->getMessage());
-         }
-         catch (\Exception $e){
-             return parent::responseError(parent::HTTP_CODE_BAD_REQUEST, $e->getMessage());
-         }
+    public function destroy($id)
+    {
+        try {
+            $this->userRepository->delete($id);
+            return parent::responseSuccess(parent::HTTP_CODE_OK, parent::MSG_REGISTRO_EXCLUIDO);
+        } catch (ModelNotFoundException $e) {
+            return parent::responseError(parent::HTTP_CODE_NOT_FOUND, $e->getMessage());
+        } catch (\Exception $e) {
+            return parent::responseError(parent::HTTP_CODE_BAD_REQUEST, $e->getMessage());
+        }
     }
 
 
+    public function logout(Request $request)
+    {
+        $value = $request->bearerToken();
+        $id= (new Parser())->parse($value)->getHeader('jti');
 
+        \DB::table('oauth_access_tokens')
+            ->where('id', '=', $id)
+            ->update(['revoked' => true]);
+
+        $json = [
+            'success' => true,
+            'code' => 200,
+            'message' => 'You are Logged out.',
+        ];
+        return response()->json($json, '200');
+    }
 }

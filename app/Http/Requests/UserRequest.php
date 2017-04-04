@@ -51,6 +51,15 @@ class UserRequest extends FormRequest
                 $rules['password_confirmation'] = '';
                 $rules['chk_newsletter'] = '';
                 return $rules;
+            case 'PATCH':
+                $this->request->remove('id');
+                $this->request->remove('email');
+                $rules['email'] = '';
+                $rules['email_confirmation'] = '';
+                $rules['password'] = '';
+                $rules['password_confirmation'] = '';
+                $rules['chk_newsletter'] = '';
+                return $rules;
         }
         return $rules;
     }

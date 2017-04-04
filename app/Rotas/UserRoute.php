@@ -12,6 +12,10 @@ class UserRoute implements ICustomRoute
 {
     public static function run()
     {
+        Route::get('admin/user/logout', [
+            'as' => 'user.meu_perfil',
+            'uses' => 'Api\Admin\UserController@logout'
+        ]);
         Route::group(['prefix'=>'admin','middleware' => ['auth:api'],'namespace'=>'Api\Admin'],function (){
             Route::get('user/perfil/', [
                 'as' => 'user.meu_perfil',

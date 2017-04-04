@@ -192,6 +192,9 @@ abstract class BaseCriteria implements CriteriaInterface
     }
 
     private function BuilderConditions($query, $row, $value, $condition){
+        if (!$value){
+            return $query;
+        }
         switch ($condition){
             case '=':
                 $query->where($row, '=', $value);
